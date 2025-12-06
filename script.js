@@ -1,133 +1,166 @@
-document.getElementById('generatePlan').addEventListener('click', generateDatePlan);
+document.querySelectorAll('.next-stage-btn').forEach(button => {
+    button.addEventListener('click', (e) => navigateStage(e.target.dataset.target));
+});
 
-// Database Ide Kencan yang Ditingkatkan: kini mempertimbangkan Mood, Budget, Durasi, dan Tema
-const dateIdeas = [
-    // Santai & Hemat
-    { mood: "Santai", budget: 1, duration: "Pendek", theme: "None", idea: "Ngopi santai di kafe dengan kursi malas. Tantangan: Harus membahas 3 hal absurd yang kalian lihat di medsos.", item: "Buku/Jurnal kecil untuk menulis hal-hal absurd." },
-    { mood: "Santai", budget: 1, duration: "Sedang", theme: "Indoor", idea: "Kencan di rumah, membuat dessert dari 2 bahan saja (misalnya pisang dan cokelat). Tantangan: Membuatnya seestetik mungkin untuk foto.", item: "Dua bahan rahasia dan kamera HP." },
-    // Petualangan & Sedang
-    { mood: "Petualangan", budget: 2, duration: "Panjang", theme: "Outdoor", idea: "Keliling kota mencari 3 mural/seni jalanan paling tersembunyi. Tantangan: Berpose aneh di depan setiap mural.", item: "Sepatu nyaman dan air minum yang banyak." },
-    { mood: "Petualangan", budget: 2, duration: "Pendek", theme: "Retro", idea: "Kunjungi rental game PS2/warnet jadul. Tantangan: Main game lama yang belum pernah kalian coba dan siapa kalah bayar. 😂", item: "Uang koin/receh dan rasa malu yang minimal." },
-    // Romantis & Mewah
-    { mood: "Romantis", budget: 3, duration: "Panjang", theme: "KulinerInternasional", idea: "Dinner di restoran fine dining Italia, pura-pura jadi kritikus makanan yang sedang menyamar. Tantangan: Harus menggunakan aksen asing saat memesan.", item: "Pakaian formal dan kosakata kuliner yang kompleks." },
-    { mood: "Romantis", budget: 3, duration: "Sedang", theme: "Indoor", idea: "Pesan layanan pijat couple atau spa premium. Tantangan: Harus diam selama 10 menit tanpa bicara sama sekali (sulit!).", item: "Uang tips dan ketenangan jiwa." },
-    // Kreatif & Sedang
-    { mood: "Kreatif", budget: 2, duration: "Pendek", theme: "Indoor", idea: "Membeli kit DIY membuat sabun/lilin aromaterapi. Tantangan: Berikan nama yang paling romantis (atau paling konyol) untuk kreasimu.", item: "Apron, jika kamu ceroboh." },
-    { mood: "Kreatif", budget: 2, duration: "Panjang", theme: "Retro", idea: "Pergi ke pasar loak, beli barang bekas misterius (maksimal Rp 50k). Tantangan: Ciptakan cerita latar yang paling lucu untuk barang itu.", item: "Uang tunai dan imajinasi liar." },
-    // Tema Khusus - Kuliner Internasional
-    { mood: "Santai", budget: 2, duration: "Sedang", theme: "KulinerInternasional", idea: "Kencan 'Keliling Dunia': Kunjungi 3 kedai makanan dari 3 negara berbeda dalam satu sore (misalnya taco, dimsum, kebab).", item: "Tisu basah dan perut yang lapang." },
-    // Tema Khusus - Outdoor
-    { mood: "Petualangan", budget: 3, duration: "Panjang", theme: "Outdoor", idea: "Glamping mewah di area pinggiran kota. Tantangan: Coba menyalakan api unggun tanpa korek (jika gagal, pakai korek saja).", item: "Senter, jaket tebal, dan marshmallow." }
+document.querySelectorAll('.back-stage-btn').forEach(button => {
+    button.addEventListener('click', (e) => navigateStage(e.target.dataset.target));
+});
+
+function navigateStage(targetStage) {
+    document.querySelectorAll('.planner-stage, .result-section').forEach(stage => {
+        stage.classList.add('hidden');
+    });
+
+    const targetElement = document.getElementById(`stage-${targetStage}`);
+    targetElement.classList.remove('hidden');
+
+    // Update Header Title
+    let title = "";
+    if (targetStage == 1) title = "Tahap 1: Setup Dasar Kencan";
+    else if (targetStage == 2) title = "Tahap 2: Preferensi Detail Spesifik";
+    else if (targetStage == 3) {
+        title = "Tahap 3: Rencana Kencan Terbaik (Siap Cetak!)";
+        generateMasterPlan(); // Panggil fungsi perencanaan saat mencapai Stage 3
+    }
+    document.getElementById('stage-title').textContent = title;
+    
+    window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll ke atas setiap pindah stage
+}
+
+// =================== DATABASE PERENCANAAN ===================
+
+const masterIdeas = [
+    // Rencana Santai
+    { mood: "Santai", budget: 1, duration: "Sedang", time: "Siang", theme: "None", idea: "Kencan Board Game & Ngopi Santai", activity: "Habiskan 4 jam di board game café, mencoba 2-3 game baru. Dilanjutkan ngopi di kafe terdekat.", items: ["Uang koin/receh untuk biaya game", "Topik ringan untuk dibahas di sela permainan"], itinerary: ["11:00 - 15:00: Main Board Game & Lunch ringan", "15:00 - 16:00: Pindah ke Kafe, Deep Talk Santai"] },
+    // Rencana Petualangan
+    { mood: "Petualangan", budget: 2, duration: "Panjang", time: "Pagi", theme: "Alam", idea: "Penjelajahan Kota Tua dan Hunting Foto", activity: "Mulai dengan sarapan khas, keliling area bersejarah, cari landmark tersembunyi, akhiri dengan sunset di spot terbaik.", items: ["Sepatu nyaman", "Kamera/HP", "Topi/Payung", "Peta/GPS"], itinerary: ["08:00 - 09:00: Sarapan tradisional", "09:00 - 15:00: Eksplorasi Kota Tua & Museum", "15:00 - 18:00: Istirahat & Cari Sunset Spot"] },
+    // Rencana Romantis
+    { mood: "Romantis", budget: 3, duration: "Malam", time: "Malam", theme: "Kuliner", idea: "Dinner Romantis & Jazz Akustik", activity: "Dinner di rooftop/restoran intim, dilanjutkan menikmati musik jazz/akustik di bar yang tenang.", items: ["Pakaian rapih/formal", "Reservasi sudah dipastikan", "Sebutkan 3 pujian tulus"], itinerary: ["19:00 - 21:00: Fine Dining", "21:00 - Selesai: Nikmati Live Music Romantis"] },
+    // Rencana Kreatif
+    { mood: "Kreatif", budget: 2, duration: "Sedang", time: "Siang", theme: "Seni", idea: "Workshop Membuat Keramik dan Gelato Date", activity: "Ikut kelas kerajinan (keramik/lukis/tenun). Fokus pada proses, bukan hasil. Setelah itu, nikmati gelato unik.", items: ["Baju yang tidak takut kotor", "Uang lebih untuk beli hasil karya", "Rasa humor"], itinerary: ["13:00 - 16:00: Workshop Seni", "16:00 - 17:00: Ngobrol dan Ngemil Gelato"] },
+    // Rencana Premium Pagi
+    { mood: "Petualangan", budget: 3, duration: "Panjang", time: "Pagi", theme: "Alam", idea: "Sunrise Bromo/Spot Alam dengan Sarapan Mewah", activity: "Perjalanan ke spot alam (di luar kota) untuk menikmati matahari terbit, dilanjutkan sarapan premium/hotel. (Ideal untuk weekend)", items: ["Jaket tebal", "Kamera DSLR (jika ada)", "Power bank"], itinerary: ["03:00 - 06:00: Perjalanan & Sunrise Watching", "07:00 - 09:00: Sarapan Mewah", "09:00 - 12:00: Perjalanan Pulang/Aktivitas Santai"] },
 ];
 
-// Ramalan Suasana Kencan Lucu
-const moodRamalan = [
-    "Kencan ini 90% akan berjalan lancar, 10% sisanya akan diisi dengan perdebatan tentang siapa yang lebih tua. 🧐",
-    "Bintang meramalkan: **Kejutan kecil** di tengah kencan. Mungkin kamu akan menemukan dompet yang jatuh, atau dia akan menemukan cinta sejatinya (yaitu kamu, tentunya!).",
-    "Sangat dinamis! Kalian akan **mengubah rencana 3 kali** dalam 1 jam pertama, tapi berakhir di tempat yang jauh lebih baik.",
-    "Persiapkan mental: akan ada momen canggung lucu ketika kalian **bertemu mantan** (milik salah satu dari kalian). Bersikaplah heroik!",
-    "Ramalan Kesiapan: **Sangat Romantis**, tapi ada kemungkinan besar salah satu dari kalian akan melupakan kunci rumah. 🔑",
-    "Kencan ini akan menjadi sejarah! Kalian akan membuat **inside joke** baru yang akan kalian gunakan sampai tua. 😂",
-    "Peringatan: Kalian mungkin akan **terlalu fokus** mendokumentasikan kencan ini di medsos sampai lupa menikmati momen. Taruh ponselmu sebentar!"
-];
 
-function generateDatePlan() {
-    const dateMood = document.getElementById('dateMood').value;
-    const budgetLevel = parseInt(document.getElementById('budgetLevel').value);
-    const dateDuration = document.getElementById('dateDuration').value;
-    const dateTheme = document.getElementById('dateTheme').value;
+// =================== FUNGSI PERENCANAAN UTAMA ===================
+
+function generateMasterPlan() {
+    const data = {
+        name: document.getElementById('dateName').value || "Kencan Tanpa Nama (Misterius!)",
+        mood: document.getElementById('dateMood').value,
+        budget: parseInt(document.getElementById('budgetLevel').value),
+        duration: document.getElementById('dateDuration').value,
+        theme: document.getElementById('dateTheme').value,
+        time: document.getElementById('dateHour').value,
+        foodAvoid: document.getElementById('foodAvoid').value.toLowerCase().split(',').map(s => s.trim()).filter(s => s),
+        activityAvoid: document.getElementById('activityAvoid').value.toLowerCase().split(',').map(s => s.trim()).filter(s => s),
+        petFriendly: document.getElementById('petFriendly').value,
+        liveMusic: document.getElementById('liveMusic').value
+    };
+
     const outputDiv = document.getElementById('dateOutput');
-    const resultSection = document.querySelector('.result-section');
+    let finalPlan = null;
+    let score = 0;
 
-    // 1. Filter Ide Kencan (Lebih Kompleks)
-    let possibleIdeas = dateIdeas.filter(idea => 
-        idea.mood === dateMood &&
-        idea.budget <= budgetLevel &&
-        idea.duration === dateDuration
+    // 1. Filter Ide Kencan Terbaik
+    let possiblePlans = masterIdeas.filter(plan => 
+        plan.mood === data.mood &&
+        plan.budget <= data.budget &&
+        (data.theme === 'None' || plan.theme === data.theme)
     );
-
-    // Filter berdasarkan Tema jika tema dipilih (bukan 'None')
-    if (dateTheme !== 'None') {
-        const themeIdeas = dateIdeas.filter(idea => idea.theme === dateTheme);
-        // Gabungkan ide yang sesuai mood/budget/durasi DENGAN ide bertema
-        possibleIdeas = [...possibleIdeas, ...themeIdeas].filter((v, i, a) => 
-            a.findIndex(t => (t.idea === v.idea)) === i // Hapus duplikat
+    
+    // 2. Terapkan Filter Tambahan (Preferensi Tahap 2)
+    // Kriteria Romantis vs Ramai: Jika Romantis, prioritaskan No Live Music
+    if (data.mood === 'Romantis' && data.liveMusic === 'No') {
+        // Hanya ambil rencana yang lebih tenang
+        possiblePlans = possiblePlans.filter(plan => 
+            plan.idea.toLowerCase().indexOf('jazz') === -1 && 
+            plan.idea.toLowerCase().indexOf('bar') === -1
         );
     }
-    
-    // Fallback: Jika tidak ada ide yang cocok, cari ide yang paling mendekati mood & budget.
-    if (possibleIdeas.length === 0) {
-        possibleIdeas = dateIdeas.filter(idea => idea.mood === dateMood && idea.budget <= budgetLevel);
-        if (possibleIdeas.length === 0) {
-            outputDiv.innerHTML = `<div class="result-box" style="background-color: #f8d7da; border-left-color: #dc3545;">
-                😢 **Oops!** Kombinasi mood/budget/durasi/tema terlalu unik. Coba **longgarkan budget** atau pilih **mood yang berbeda**!
+
+    // Ambil rencana terbaik/terdekat dari hasil filter
+    if (possiblePlans.length > 0) {
+        // Pilih rencana acak dari yang paling cocok
+        const randomIndex = Math.floor(Math.random() * possiblePlans.length);
+        finalPlan = possiblePlans[randomIndex];
+        score = calculateQualityScore(data, finalPlan); // Hitung Skor Kualitas
+    } else {
+        // Fallback jika tidak ada yang cocok sempurna (Ambil dari mood & budget saja)
+        const fallbackPlans = masterIdeas.filter(plan => plan.mood === data.mood && plan.budget <= data.budget);
+        if (fallbackPlans.length > 0) {
+            finalPlan = fallbackPlans[Math.floor(Math.random() * fallbackPlans.length)];
+            score = calculateQualityScore(data, finalPlan) - 10; // Kurangi skor karena tidak ideal
+        } else {
+            outputDiv.innerHTML = `<div class="info-box" style="background-color: #f8d7da;">
+                😭 **ERROR 404: DATE NOT FOUND.** Kombinasi Anda terlalu unik! Coba kurangi budget atau ubah mood.
             </div>`;
-            resultSection.classList.remove('hidden');
-            resultSection.scrollIntoView({ behavior: 'smooth' });
             return;
         }
     }
 
 
-    // 2. Pilih Ide Kencan Acak
-    const randomIndex = Math.floor(Math.random() * possibleIdeas.length);
-    const chosenIdea = possibleIdeas[randomIndex];
-
-    // 3. Pilih Ramalan Lucu Acak & Hitung Score Kesiapan
-    const randomRamalan = moodRamalan[Math.floor(Math.random() * moodRamalan.length)];
-    const readinessScore = calculateReadinessScore(budgetLevel, dateDuration, dateTheme);
-    
-    // 4. Hitung Perkiraan Biaya
-    let estimatedCost;
-    if (chosenIdea.budget === 1) estimatedCost = "Rp 50.000 - Rp 150.000";
-    else if (chosenIdea.budget === 2) estimatedCost = "Rp 150.000 - Rp 500.000";
-    else estimatedCost = "Rp 500.000 - Rp 2.000.000+";
-
-    // 5. Tampilkan Hasil
+    // 3. Render Hasil Rencana Terbaik
     outputDiv.innerHTML = `
-        <div class="result-box">
-            <h4>💡 Ide Kencan Utama:</h4>
-            <p><i class="fas fa-calendar-check"></i> **${chosenIdea.idea}**</p>
+        <div class="result-box" style="background-color: #e6e6fa;">
+            <h2>⭐ Rencana Utama: **${finalPlan.idea}**</h2>
+            <p><strong>Dibuat untuk:</strong> ${data.name}</p>
+            <p><strong>Skor Kualitas Perencanaan:</strong> <span style="color: var(--secondary-color); font-weight: 700;">${score}/100</span> (Sangat direkomendasikan!)</p>
         </div>
-        
+
         <div class="result-box">
-            <h4>🎯 Tantangan Kencan Spesial:</h4>
-            <p class="date-challenge"><i class="fas fa-hand-rock"></i> ${chosenIdea.item} (Tips: Selalu lakukan tantangan!)</p>
+            <h4><i class="fas fa-route"></i> Itinerary Kencan Dasar</h4>
+            ${finalPlan.itinerary.map(step => `<div class="itinerary-step">${step}</div>`).join('')}
         </div>
-        
+
         <div class="result-box">
-            <h4>💰 Budget & Durasi:</h4>
-            <p>Perkiraan Biaya: **${estimatedCost}** | Ideal Durasi: **${dateDuration}**</p>
+            <h4><i class="fas fa-list-check"></i> Checklist Wajib Bawa</h4>
+            ${finalPlan.items.map(item => `<div class="checklist-item"><i class="far fa-circle"></i> ${item}</div>`).join('')}
+            
+            <p style="margin-top: 10px;">Tambahan dari Preferensi Anda (Hati-hati!):</p>
+            ${renderPreferenceWarnings(data)}
         </div>
-        
-        <div class="result-box">
-            <h4>🔮 Ramalan Suasana Kencan:</h4>
-            <p class="mood-ramalan"><i class="fas fa-bahai"></i> ${randomRamalan}</p>
-        </div>
-        
-        <div class="readiness-score">
-            <i class="fas fa-star"></i> Tingkat Kesiapan (Fun Score): **${readinessScore}/100** <i class="fas fa-star"></i>
+
+        <div class="result-box" style="border-left: 4px solid var(--accent-color);">
+            <h4><i class="fas fa-trophy"></i> Goal Kencan:</h4>
+            <p>${finalPlan.activity}</p>
         </div>
     `;
-
-    resultSection.classList.remove('hidden');
-    resultSection.scrollIntoView({ behavior: 'smooth' });
 }
 
-// Fungsi untuk membuat skor kesiapan yang dinamis dan lucu
-function calculateReadinessScore(budget, duration, theme) {
-    let score = 50; // Base score
+// Fungsi untuk menghitung kualitas perencanaan
+function calculateQualityScore(data, plan) {
+    let score = 70; // Base score
     
-    // Tambahkan poin berdasarkan pilihan
-    if (budget === 3) score += 15; // Mewah = Happy
-    if (duration === "Panjang") score += 10; // Durasi Panjang = Lebih banyak kesempatan seru
-    if (theme !== "None") score += 10; // Ada tema = Usaha lebih keras
+    // Cek kecocokan preferensi
+    if (data.duration === plan.duration) score += 5;
+    if (data.time === plan.time) score += 5;
 
-    // Elemen kejutan/random
-    score += Math.floor(Math.random() * 20); // Tambahkan random 0-19 poin
-
-    // Batasi skor 
-    if (score > 100) score = 100;
+    // Cek penghindaran
+    const planString = (plan.idea + plan.activity).toLowerCase();
     
-    return score;
+    // Jika rencana mengandung sesuatu yang dihindari, kurangi skor
+    if (data.activityAvoid.some(avoid => planString.includes(avoid))) score -= 15;
+    
+    // Jika tidak ada penghindaran makanan (asumsi plan makanan aman), tambahkan sedikit
+    if (data.foodAvoid.length === 0) score += 5;
+
+    // Tambahkan elemen kejutan
+    score += Math.floor(Math.random() * 10); 
+
+    return Math.min(score, 100); // Batasi maksimal 100
 }
+
+// Fungsi untuk merender peringatan preferensi
+function renderPreferenceWarnings(data) {
+    let warnings = [];
+    if (data.foodAvoid.length > 0) warnings.push(`<div style="color: #dc3545;"><i class="fas fa-exclamation-triangle"></i> **JANGAN ADA:** ${data.foodAvoid.join(', ')} (Pastikan tempat makan aman!)</div>`);
+    if (data.activityAvoid.length > 0) warnings.push(`<div style="color: #dc3545;"><i class="fas fa-exclamation-triangle"></i> **HINDARI:** ${data.activityAvoid.join(', ')}</div>`);
+    if (data.petFriendly === 'No') warnings.push(`<div><i class="fas fa-paw"></i> Pastikan lokasi **bukan** pet-friendly.</div>`);
+
+    return warnings.length > 0 ? warnings.join('') : "<div><i class='fas fa-check-circle'></i> Tidak ada peringatan khusus yang diinput.</div>";
+}
+
+// Mulai dari Stage 1 saat pertama kali dimuat
+document.addEventListener('DOMContentLoaded', () => navigateStage('1'));
