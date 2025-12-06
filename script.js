@@ -14,40 +14,42 @@ function navigateStage(targetStage) {
     const targetElement = document.getElementById(`stage-${targetStage}`);
     targetElement.classList.remove('hidden');
 
-    // Update Header Title
     let title = "";
     if (targetStage == 1) title = "Tahap 1: Setup Dasar Kencan";
-    else if (targetStage == 2) title = "Tahap 2: Preferensi Detail Spesifik";
+    else if (targetStage == 2) title = "Tahap 2: Preferensi Detail Spesifik & Filter Asyik";
     else if (targetStage == 3) {
         title = "Tahap 3: Rencana Kencan Terbaik (Siap Cetak!)";
-        generateMasterPlan(); // Panggil fungsi perencanaan saat mencapai Stage 3
+        generateMasterPlan(); 
     }
     document.getElementById('stage-title').textContent = title;
     
-    window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll ke atas setiap pindah stage
+    window.scrollTo({ top: 0, behavior: 'smooth' }); 
 }
 
-// =================== DATABASE PERENCANAAN ===================
+// =================== DATABASE PERENCANAAN YANG DIPERBANYAK ===================
 
 const masterIdeas = [
-    // Rencana Santai
-    { mood: "Santai", budget: 1, duration: "Sedang", time: "Siang", theme: "None", idea: "Kencan Board Game & Ngopi Santai", activity: "Habiskan 4 jam di board game café, mencoba 2-3 game baru. Dilanjutkan ngopi di kafe terdekat.", items: ["Uang koin/receh untuk biaya game", "Topik ringan untuk dibahas di sela permainan"], itinerary: ["11:00 - 15:00: Main Board Game & Lunch ringan", "15:00 - 16:00: Pindah ke Kafe, Deep Talk Santai"] },
-    // Rencana Petualangan
-    { mood: "Petualangan", budget: 2, duration: "Panjang", time: "Pagi", theme: "Alam", idea: "Penjelajahan Kota Tua dan Hunting Foto", activity: "Mulai dengan sarapan khas, keliling area bersejarah, cari landmark tersembunyi, akhiri dengan sunset di spot terbaik.", items: ["Sepatu nyaman", "Kamera/HP", "Topi/Payung", "Peta/GPS"], itinerary: ["08:00 - 09:00: Sarapan tradisional", "09:00 - 15:00: Eksplorasi Kota Tua & Museum", "15:00 - 18:00: Istirahat & Cari Sunset Spot"] },
-    // Rencana Romantis
-    { mood: "Romantis", budget: 3, duration: "Malam", time: "Malam", theme: "Kuliner", idea: "Dinner Romantis & Jazz Akustik", activity: "Dinner di rooftop/restoran intim, dilanjutkan menikmati musik jazz/akustik di bar yang tenang.", items: ["Pakaian rapih/formal", "Reservasi sudah dipastikan", "Sebutkan 3 pujian tulus"], itinerary: ["19:00 - 21:00: Fine Dining", "21:00 - Selesai: Nikmati Live Music Romantis"] },
-    // Rencana Kreatif
-    { mood: "Kreatif", budget: 2, duration: "Sedang", time: "Siang", theme: "Seni", idea: "Workshop Membuat Keramik dan Gelato Date", activity: "Ikut kelas kerajinan (keramik/lukis/tenun). Fokus pada proses, bukan hasil. Setelah itu, nikmati gelato unik.", items: ["Baju yang tidak takut kotor", "Uang lebih untuk beli hasil karya", "Rasa humor"], itinerary: ["13:00 - 16:00: Workshop Seni", "16:00 - 17:00: Ngobrol dan Ngemil Gelato"] },
-    // Rencana Premium Pagi
-    { mood: "Petualangan", budget: 3, duration: "Panjang", time: "Pagi", theme: "Alam", idea: "Sunrise Bromo/Spot Alam dengan Sarapan Mewah", activity: "Perjalanan ke spot alam (di luar kota) untuk menikmati matahari terbit, dilanjutkan sarapan premium/hotel. (Ideal untuk weekend)", items: ["Jaket tebal", "Kamera DSLR (jika ada)", "Power bank"], itinerary: ["03:00 - 06:00: Perjalanan & Sunrise Watching", "07:00 - 09:00: Sarapan Mewah", "09:00 - 12:00: Perjalanan Pulang/Aktivitas Santai"] },
-];
+    // Tambahan Glamour & Mewah
+    { mood: "Glamour", budget: 3, duration: "Malam", time: "Malam", theme: "None", idea: "Cocktail Party Dress Up & Sky Bar Date", activity: "Kenakan pakaian terbaik, nikmati koktail mahal di rooftop bar dengan pemandangan kota. Wajib foto OOTD!", items: ["Pakaian rapih/dress code", "Uang tips", "Percakapan berkelas"], instagrammable: true, air: "Dingin" },
+    
+    // Tambahan Kreatif & Retro
+    { mood: "Kreatif", budget: 2, duration: "Sedang", time: "Siang", theme: "Retro", idea: "Hunting Vinyl di Pasar Antik dan Dengerin Bareng", activity: "Kunjungi pasar loak/toko barang antik, cari piringan hitam/kaset lama. Pulang dan dengarkan sambil membuat daftar lagu kencan.", items: ["Uang tunai kecil", "Walkman/pemutar piringan hitam (jika punya)", "Rasa penasaran"], instagrammable: false, air: "Hangat" },
+    
+    // Tambahan Santai & Alam
+    { mood: "Santai", budget: 1, duration: "Panjang", time: "Pagi", theme: "Alam", idea: "Piknik Santai di Kebun Raya / Taman Kota", activity: "Bawa bekal makanan dari rumah (low budget), nikmati alam, dan main tebak-tebakan hewan/tumbuhan.", items: ["Alas tikar", "Bekal makanan favorit", "Anti nyamuk"], instagrammable: true, air: "Hangat" },
+    
+    // Default Rencana Petualangan
+    { mood: "Petualangan", budget: 2, duration: "Panjang", time: "Pagi", theme: "Alam", idea: "Mini Hiking ke Bukit Terdekat dan Brunch", activity: "Mendaki ringan saat udara masih segar, akhiri dengan brunch enak di kafe yang viewnya bagus.", items: ["Sepatu olahraga", "Air minum", "Handuk kecil"], instagrammable: true, air: "Dingin" },
 
+    // Default Rencana Romantis
+    { mood: "Romantis", budget: 3, duration: "Sedang", time: "Malam", theme: "Kuliner", idea: "Dinner Intim di Restoran Tersembunyi", activity: "Cari restoran yang tenang, punya pencahayaan redup, dan menu yang tidak biasa. Fokus pada percakapan mendalam.", items: ["Pakaian rapih", "Pastikan reservasi", "Topik pembicaraan non-kerja"], instagrammable: false, air: "Dingin" },
+];
 
 // =================== FUNGSI PERENCANAAN UTAMA ===================
 
 function generateMasterPlan() {
     const data = {
-        name: document.getElementById('dateName').value || "Kencan Tanpa Nama (Misterius!)",
+        name: document.getElementById('dateName').value || "Kencan Misterius!",
         mood: document.getElementById('dateMood').value,
         budget: parseInt(document.getElementById('budgetLevel').value),
         duration: document.getElementById('dateDuration').value,
@@ -56,50 +58,45 @@ function generateMasterPlan() {
         foodAvoid: document.getElementById('foodAvoid').value.toLowerCase().split(',').map(s => s.trim()).filter(s => s),
         activityAvoid: document.getElementById('activityAvoid').value.toLowerCase().split(',').map(s => s.trim()).filter(s => s),
         petFriendly: document.getElementById('petFriendly').value,
-        liveMusic: document.getElementById('liveMusic').value
+        liveMusic: document.getElementById('liveMusic').value,
+        photoOp: document.getElementById('photoOp').value,
+        airQuality: document.getElementById('airQuality').value // NEW
     };
 
     const outputDiv = document.getElementById('dateOutput');
     let finalPlan = null;
-    let score = 0;
 
-    // 1. Filter Ide Kencan Terbaik
+    // 1. Filter Ide Kencan (Filter Ketat)
     let possiblePlans = masterIdeas.filter(plan => 
         plan.mood === data.mood &&
         plan.budget <= data.budget &&
-        (data.theme === 'None' || plan.theme === data.theme)
+        (data.theme === 'None' || plan.theme === data.theme) &&
+        (data.photoOp === 'No' || plan.instagrammable === (data.photoOp === 'Yes')) &&
+        (data.airQuality === plan.air)
     );
     
-    // 2. Terapkan Filter Tambahan (Preferensi Tahap 2)
-    // Kriteria Romantis vs Ramai: Jika Romantis, prioritaskan No Live Music
-    if (data.mood === 'Romantis' && data.liveMusic === 'No') {
-        // Hanya ambil rencana yang lebih tenang
-        possiblePlans = possiblePlans.filter(plan => 
-            plan.idea.toLowerCase().indexOf('jazz') === -1 && 
-            plan.idea.toLowerCase().indexOf('bar') === -1
+    // Fallback: Jika filter terlalu ketat, longgarkan filter tema dan waktu
+    if (possiblePlans.length === 0) {
+        possiblePlans = masterIdeas.filter(plan => 
+            plan.mood === data.mood &&
+            plan.budget <= data.budget
         );
     }
-
-    // Ambil rencana terbaik/terdekat dari hasil filter
+    
+    // Final check dan pemilihan
     if (possiblePlans.length > 0) {
-        // Pilih rencana acak dari yang paling cocok
         const randomIndex = Math.floor(Math.random() * possiblePlans.length);
         finalPlan = possiblePlans[randomIndex];
-        score = calculateQualityScore(data, finalPlan); // Hitung Skor Kualitas
     } else {
-        // Fallback jika tidak ada yang cocok sempurna (Ambil dari mood & budget saja)
-        const fallbackPlans = masterIdeas.filter(plan => plan.mood === data.mood && plan.budget <= data.budget);
-        if (fallbackPlans.length > 0) {
-            finalPlan = fallbackPlans[Math.floor(Math.random() * fallbackPlans.length)];
-            score = calculateQualityScore(data, finalPlan) - 10; // Kurangi skor karena tidak ideal
-        } else {
-            outputDiv.innerHTML = `<div class="info-box" style="background-color: #f8d7da;">
-                😭 **ERROR 404: DATE NOT FOUND.** Kombinasi Anda terlalu unik! Coba kurangi budget atau ubah mood.
-            </div>`;
-            return;
-        }
+        // Error handling yang lebih baik
+        outputDiv.innerHTML = `<div class="info-box" style="background-color: #f8d7da;">
+            😭 **ERROR 404: DATE NOT FOUND.** Maaf, kombinasi preferensi Anda (terutama suhu/tema/foto) terlalu ketat. Coba **longgarkan filter** di Tahap 2!
+        </div>`;
+        return;
     }
 
+    // 2. Hitung Skor Kualitas
+    let score = calculateQualityScore(data, finalPlan); 
 
     // 3. Render Hasil Rencana Terbaik
     outputDiv.innerHTML = `
@@ -115,51 +112,70 @@ function generateMasterPlan() {
         </div>
 
         <div class="result-box">
-            <h4><i class="fas fa-list-check"></i> Checklist Wajib Bawa</h4>
+            <h4><i class="fas fa-list-check"></i> Checklist Wajib Bawa & Peringatan</h4>
             ${finalPlan.items.map(item => `<div class="checklist-item"><i class="far fa-circle"></i> ${item}</div>`).join('')}
             
-            <p style="margin-top: 10px;">Tambahan dari Preferensi Anda (Hati-hati!):</p>
+            <p style="margin-top: 10px;">--- Filter Preferensi Anda ---</p>
             ${renderPreferenceWarnings(data)}
         </div>
 
         <div class="result-box" style="border-left: 4px solid var(--accent-color);">
             <h4><i class="fas fa-trophy"></i> Goal Kencan:</h4>
             <p>${finalPlan.activity}</p>
+            
+            <p style="margin-top: 15px;">**FITUR ASYIK TAMBAHAN:**</p>
+            ${renderBonusFeature(data, finalPlan)}
         </div>
     `;
 }
 
 // Fungsi untuk menghitung kualitas perencanaan
 function calculateQualityScore(data, plan) {
-    let score = 70; // Base score
+    let score = 70; 
     
-    // Cek kecocokan preferensi
     if (data.duration === plan.duration) score += 5;
     if (data.time === plan.time) score += 5;
 
-    // Cek penghindaran
     const planString = (plan.idea + plan.activity).toLowerCase();
     
-    // Jika rencana mengandung sesuatu yang dihindari, kurangi skor
+    // Penalti Besar jika ada yang dihindari
     if (data.activityAvoid.some(avoid => planString.includes(avoid))) score -= 15;
+    if (data.foodAvoid.length > 0 && plan.idea.toLowerCase().includes('kuliner')) score -= 5;
     
-    // Jika tidak ada penghindaran makanan (asumsi plan makanan aman), tambahkan sedikit
-    if (data.foodAvoid.length === 0) score += 5;
+    // Bonus Fitur Asyik
+    if (data.photoOp === 'Yes' && plan.instagrammable) score += 5; 
+    if (data.airQuality === plan.air) score += 5; 
 
-    // Tambahkan elemen kejutan
     score += Math.floor(Math.random() * 10); 
 
-    return Math.min(score, 100); // Batasi maksimal 100
+    return Math.min(score, 100); 
+}
+
+// Fungsi Fitur Asyik Tambahan: Memberi tugas atau "hukuman" lucu
+function renderBonusFeature(data, plan) {
+    const featureList = [];
+
+    // Fitur 1: Tugas Berdasarkan Mood
+    if (data.mood === 'Romantis') featureList.push(`<div style="color: purple;"><i class="fas fa-kiss-wink-heart"></i> **Tugas Intim:** Selama 5 menit, hanya bicara dengan **bisikan** tentang masa depan.</div>`);
+    else if (data.mood === 'Kreatif') featureList.push(`<div style="color: darkgreen;"><i class="fas fa-feather-alt"></i> **Tugas Kreatif:** Ciptakan satu **pantun spontan** tentang hari ini.</div>`);
+    else if (data.mood === 'Petualangan') featureList.push(`<div style="color: darkorange;"><i class="fas fa-running"></i> **Tugas Spontan:** Harus mencoba minimal satu **makanan/minuman yang belum pernah** kalian coba hari ini!</div>`);
+    
+    // Fitur 2: Hukuman/Reward Instagrammable
+    if (data.photoOp === 'Yes' && plan.instagrammable) {
+        featureList.push(`<div><i class="fas fa-star-of-life"></i> **Reward Foto:** Ambil foto yang **paling konyol**, dan jadikan wallpaper HP-nya selama 24 jam!</div>`);
+    }
+
+    return featureList.join('');
 }
 
 // Fungsi untuk merender peringatan preferensi
 function renderPreferenceWarnings(data) {
     let warnings = [];
-    if (data.foodAvoid.length > 0) warnings.push(`<div style="color: #dc3545;"><i class="fas fa-exclamation-triangle"></i> **JANGAN ADA:** ${data.foodAvoid.join(', ')} (Pastikan tempat makan aman!)</div>`);
-    if (data.activityAvoid.length > 0) warnings.push(`<div style="color: #dc3545;"><i class="fas fa-exclamation-triangle"></i> **HINDARI:** ${data.activityAvoid.join(', ')}</div>`);
+    if (data.foodAvoid.length > 0) warnings.push(`<div style="color: #dc3545;"><i class="fas fa-exclamation-triangle"></i> **JANGAN ADA:** ${data.foodAvoid.join(', ')} (Wajib diperiksa di tempat makan!)</div>`);
+    if (data.activityAvoid.length > 0) warnings.push(`<div style="color: #dc3545;"><i class="fas fa-exclamation-triangle"></i> **HINDARI:** ${data.activityAvoid.join(', ')} (Pastikan Itinerary sesuai)</div>`);
     if (data.petFriendly === 'No') warnings.push(`<div><i class="fas fa-paw"></i> Pastikan lokasi **bukan** pet-friendly.</div>`);
 
-    return warnings.length > 0 ? warnings.join('') : "<div><i class='fas fa-check-circle'></i> Tidak ada peringatan khusus yang diinput.</div>";
+    return warnings.length > 0 ? warnings.join('') : "<div><i class='fas fa-check-circle'></i> Tidak ada peringatan khusus yang diinput. Rencana aman terkendali.</div>";
 }
 
 // Mulai dari Stage 1 saat pertama kali dimuat
