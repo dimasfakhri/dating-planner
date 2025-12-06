@@ -1,17 +1,134 @@
-/* ... (CSS dari jawaban sebelumnya - JANGAN DIHAPUS) ... */
+/* Import Fonts and Icons */
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600;700&display=swap');
 
 :root {
-    --primary-color: #ff69b4; 
-    --secondary-color: #8a2be2; 
-    --accent-color: #ffd700; 
+    --primary-color: #ff69b4; /* Hot Pink */
+    --secondary-color: #8a2be2; /* Blue Violet */
+    --accent-color: #ffd700; /* Gold */
     --text-color: #1a1a1a;
-    --bg-color: #fce4ec; 
+    --bg-color: #fce4ec; /* Light Pink background */
     --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
-/* ... (Kode CSS untuk body, header, container, card, form-grid, input, dan button-group) ... */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-/* RESULT SECTION STYLING */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 30px 0 15px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+header h1 {
+    font-family: 'Pacifico', cursive;
+    font-size: 3em;
+    margin-bottom: 5px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+#stage-title {
+    font-size: 1.2em;
+    font-weight: 600;
+    padding-top: 10px;
+}
+
+.container {
+    width: 95%;
+    max-width: 1000px;
+    margin: 40px auto;
+}
+
+.card {
+    background-color: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.3s;
+}
+
+.card h2 {
+    color: var(--secondary-color);
+    border-bottom: 3px solid var(--primary-color);
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+    font-weight: 700;
+}
+
+/* Form Layouts */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--primary-color);
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+input[type="text"], select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    font-size: 1em;
+}
+
+/* Button Styling */
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.next-stage-btn, .back-stage-btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.next-stage-btn {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.next-stage-btn:hover {
+    background-color: #ff3399;
+    box-shadow: 0 4px 10px rgba(255, 105, 180, 0.5);
+}
+
+.back-stage-btn {
+    background-color: #f0f0f0;
+    color: var(--text-color);
+}
+
+/* Result Section Styling */
 #dateOutput > div {
     padding: 20px;
     margin-bottom: 15px;
@@ -24,7 +141,6 @@
     background-color: #f9f9ff;
     padding: 15px;
     margin-top: 10px;
-    margin-bottom: 5px; /* Added spacing */
 }
 
 .checklist-item {
@@ -32,48 +148,43 @@
     border-bottom: 1px dashed #eee;
 }
 
+.print-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+}
+
 .hidden {
     display: none;
 }
 
-/* FIX UNTUK PRINTING */
+/* Footer & Print Styles */
+footer {
+    text-align: center;
+    padding: 15px;
+    background-color: var(--secondary-color);
+    color: white;
+    font-size: 0.8em;
+    margin-top: auto;
+}
+
 @media print {
-    /* Sembunyikan semua elemen navigasi dan tombol */
-    .no-print, .print-group, header, footer {
+    .print-group, header, footer {
         display: none !important;
     }
-    
-    body {
-        background: white;
-        color: black;
-    }
-    
     .container {
         max-width: none;
         width: 100%;
         margin: 0;
     }
-    
-    /* Pastikan hasil cetak hanya menampilkan Stage 3 */
-    .planner-stage.card {
-        display: none; 
-    }
-    
-    .result-section.card {
+    .planner-stage.card, .result-section.card {
         box-shadow: none;
         border: none;
         padding: 0;
-    }
-    
-    /* Pastikan warna teks dan background aman untuk tinta */
-    .result-box {
-        border: 1px solid #333 !important;
-        background: white !important;
-        page-break-inside: avoid; /* Mencegah kotak terpotong */
-    }
-
-    .itinerary-step {
-        border-left: 4px solid #333 !important;
-        background: white !important;
     }
 }
