@@ -3,7 +3,7 @@
 
 :root {
     --primary-color: #ff69b4; /* Hot Pink */
-    --secondary-color: #8a2be2; /* Blue Violet for contrast */
+    --secondary-color: #8a2be2; /* Blue Violet */
     --accent-color: #ffd700; /* Gold */
     --text-color: #1a1a1a;
     --bg-color: #fce4ec; /* Light Pink background */
@@ -24,13 +24,12 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    padding-bottom: 50px; /* Space for footer */
 }
 
 header {
     background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
     color: white;
-    padding: 30px 0;
+    padding: 30px 0 15px;
     text-align: center;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
@@ -42,9 +41,15 @@ header h1 {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
+#stage-title {
+    font-size: 1.2em;
+    font-weight: 600;
+    padding-top: 10px;
+}
+
 .container {
-    width: 90%;
-    max-width: 950px;
+    width: 95%;
+    max-width: 1000px;
     margin: 40px auto;
 }
 
@@ -52,36 +57,35 @@ header h1 {
     background-color: white;
     padding: 30px;
     border-radius: 20px;
-    margin-bottom: 30px;
     box-shadow: var(--card-shadow);
     transition: transform 0.3s;
 }
 
-.card:hover {
-    transform: translateY(-5px);
-}
-
-/* Form Grid for Input */
-.form-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    margin-bottom: 20px;
-}
-
-.input-section h2, .result-section h2 {
+.card h2 {
     color: var(--secondary-color);
-    border-bottom: 3px dashed var(--primary-color);
+    border-bottom: 3px solid var(--primary-color);
     padding-bottom: 15px;
     margin-bottom: 25px;
     font-weight: 700;
+}
+
+/* Form Layouts */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
 }
 
 .form-group label {
     display: block;
     font-weight: 600;
     margin-bottom: 8px;
-    color: var(--secondary-color);
+    color: var(--primary-color);
+}
+
+.full-width {
+    grid-column: 1 / -1;
 }
 
 input[type="text"], select {
@@ -90,88 +94,97 @@ input[type="text"], select {
     border: 2px solid #ccc;
     border-radius: 10px;
     font-size: 1em;
-    transition: all 0.3s;
-    background-color: #fff;
 }
 
-input[type="text"]:focus, select:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 5px rgba(255, 105, 180, 0.5);
-    outline: none;
+/* Button Styling */
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
 }
 
-#generatePlan {
-    display: block;
-    width: 100%;
-    padding: 18px;
-    background: linear-gradient(to right, var(--accent-color), #ff8c00); /* Orange Gold */
-    color: white;
+.next-stage-btn, .back-stage-btn {
+    padding: 12px 25px;
     border: none;
-    border-radius: 30px;
-    font-size: 1.3em;
-    font-weight: 700;
+    border-radius: 25px;
+    font-size: 1.1em;
+    font-weight: 600;
     cursor: pointer;
-    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
     transition: all 0.3s;
 }
 
-#generatePlan:hover {
-    background: linear-gradient(to right, #ff8c00, var(--accent-color));
-    transform: scale(1.02);
+.next-stage-btn {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.next-stage-btn:hover {
+    background-color: #ff3399;
+    box-shadow: 0 4px 10px rgba(255, 105, 180, 0.5);
+}
+
+.back-stage-btn {
+    background-color: #f0f0f0;
+    color: var(--text-color);
 }
 
 /* Result Section Styling */
-.result-section {
-    border: 3px solid var(--primary-color);
-    background-color: #fffaf0; /* Creamy background */
-}
-
-.result-box {
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 10px;
-    background-color: var(--bg-color);
-    border-left: 6px solid var(--secondary-color);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-.result-box h4 {
-    color: var(--primary-color);
-    margin-top: 0;
-    margin-bottom: 5px;
-    font-weight: 600;
-}
-
-.mood-ramalan, .date-challenge {
-    font-style: italic;
-    color: #d9534f; /* Danger Red */
-    font-weight: 700;
-}
-
-.readiness-score {
-    text-align: center;
-    font-size: 1.8em;
-    font-weight: 700;
+#dateOutput > div {
     padding: 20px;
-    border: 3px double var(--accent-color);
-    border-radius: 10px;
-    margin-top: 20px;
-    background-color: #ffffed;
+    margin-bottom: 15px;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+}
+
+.itinerary-step {
+    border-left: 4px solid var(--secondary-color);
+    background-color: #f9f9ff;
+    padding: 15px;
+    margin-top: 10px;
+}
+
+.checklist-item {
+    padding: 5px 0;
+    border-bottom: 1px dashed #eee;
+}
+
+.print-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
 }
 
 .hidden {
     display: none;
 }
 
-/* Footer Styling */
+/* Footer & Print Styles */
 footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
     text-align: center;
-    padding: 10px;
+    padding: 15px;
     background-color: var(--secondary-color);
     color: white;
     font-size: 0.8em;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    margin-top: auto;
+}
+
+@media print {
+    .print-group, header, footer {
+        display: none !important;
+    }
+    .container {
+        max-width: none;
+        width: 100%;
+        margin: 0;
+    }
+    .planner-stage.card, .result-section.card {
+        box-shadow: none;
+        border: none;
+        padding: 0;
+    }
 }
