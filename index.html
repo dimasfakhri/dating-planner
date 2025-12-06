@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌟 Date Delight Planner V3: Master Planner 🌟</title>
+    <title>🌟 Date Delight Planner V4: The Ultimate Master Planner 🌟</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -11,14 +11,14 @@
 <body>
 
     <header>
-        <h1>💎 The Master Date Planner 💎</h1>
+        <h1>💎 The ULTIMATE Date Planner 💎</h1>
         <p id="stage-title">Tahap 1: Setup Dasar Kencan</p>
     </header>
 
     <main class="container">
         
         <section id="stage-1" class="planner-stage card">
-            <h2>⚙️ Kustomisasi Awal</h2>
+            <h2>⚙️ Kustomisasi Awal & Suasana</h2>
             <div class="form-grid">
                 
                 <div class="form-group">
@@ -33,7 +33,7 @@
                         <option value="Petualangan">🏞️ Petualangan & Eksplorasi</option>
                         <option value="Romantis">🌹 Romantis & Intim</option>
                         <option value="Kreatif">💡 Kreatif & Unik</option>
-                    </select>
+                        <option value="Glamour">🥂 Glamour & Mewah</option> </select>
                 </div>
                 
                 <div class="form-group">
@@ -55,13 +55,13 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="dateTheme"><i class="fas fa-utensils"></i> Tema Pilihan:</label>
+                    <label for="dateTheme"><i class="fas fa-palette"></i> Tema Pilihan:</label>
                     <select id="dateTheme">
                         <option value="None">--- Tanpa Tema ---</option>
                         <option value="Kuliner">Kuliner Khusus (Foodie) 🍔</option>
                         <option value="Alam">Bertemu Alam Terbuka 🌲</option>
                         <option value="Seni">Seni & Budaya 🖼️</option>
-                    </select>
+                        <option value="Retro">Nostalgia & Retro 📻</option> </select>
                 </div>
                 
                 <div class="form-group">
@@ -80,17 +80,17 @@
         </section>
 
         <section id="stage-2" class="planner-stage card hidden">
-            <h2>🔍 Preferensi Detail</h2>
+            <h2>🔍 Preferensi Detail & Filter Asyik</h2>
             <div class="form-grid">
                 
                 <div class="form-group full-width">
                     <label for="foodAvoid"><i class="fas fa-ban"></i> Makanan/Minuman yang Harus Dihindari:</label>
-                    <input type="text" id="foodAvoid" placeholder="Contoh: seafood, kopi, makanan pedas">
+                    <input type="text" id="foodAvoid" placeholder="Contoh: seafood, kopi, makanan pedas (Pisahkan dengan koma)">
                 </div>
                 
                 <div class="form-group full-width">
                     <label for="activityAvoid"><i class="fas fa-exclamation-triangle"></i> Aktivitas yang Mutlak Dibenci:</label>
-                    <input type="text" id="activityAvoid" placeholder="Contoh: tempat ramai, jalan kaki jauh, nonton film sedih">
+                    <input type="text" id="activityAvoid" placeholder="Contoh: tempat ramai, jalan kaki jauh, nonton film sedih (Pisahkan dengan koma)">
                 </div>
 
                 <div class="form-group">
@@ -109,6 +109,22 @@
                     </select>
                 </div>
 
+                 <div class="form-group">
+                    <label><i class="fas fa-camera"></i> Wajib Ada Foto Menarik?</label>
+                    <select id="photoOp">
+                        <option value="Yes">📸 Ya, harus Instagrammable!</option>
+                        <option value="No">😌 Tidak perlu</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-wind"></i> Pilih Suasana Udara:</label>
+                    <select id="airQuality">
+                        <option value="Dingin">🥶 Dingin/AC/Berangin</option>
+                        <option value="Hangat">🔥 Hangat/Outdoor/Cerah</option>
+                    </select>
+                </div>
+
             </div>
             
             <div class="button-group">
@@ -118,12 +134,12 @@
         </section>
 
         <section id="stage-3" class="result-section card hidden">
-            <h2>✨ Rencana Kencan Terbaik Anda ✨</h2>
+            <h2 class="no-print">✨ Rencana Kencan Terbaik Anda ✨</h2>
             <div id="dateOutput">
                 </div>
             
-            <div class="button-group print-group">
-                <button onclick="window.print()" class="print-btn"><i class="fas fa-print"></i> Cetak Itinerary</button>
+            <div class="button-group print-group no-print">
+                <button onclick="window.print()" class="print-btn"><i class="fas fa-print"></i> Cetak Itinerary Rapi</button>
                 <button class="back-stage-btn" data-target="1"><i class="fas fa-redo"></i> Buat Rencana Baru</button>
             </div>
         </section>
@@ -131,7 +147,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2025 Master Date Planner V3. Rencanakan kencan tanpa kegagalan! 😉</p>
+        <p class="no-print">&copy; 2025 Master Date Planner V4. Rencanakan kencan tanpa kegagalan! 😉</p>
     </footer>
 
     <script src="script.js"></script>
