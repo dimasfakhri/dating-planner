@@ -3,49 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>💖 Date Delight Planner 💖</title>
+    <title>🌟 Date Delight Planner V2: The Mega Edition 🌟</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 
     <header>
-        <h1>✨ Date Delight Planner ✨</h1>
-        <p>Rencanakan kencan impianmu (dengan sedikit humor!) 😂</p>
+        <h1>🎉 Date Delight Planner V2 🎉</h1>
+        <p>Rencanakan kencan yang dinamis, penuh fitur, dan super lucu! 🤣</p>
     </header>
 
     <main class="container">
         
-        <section class="input-section">
-            <h2>📝 Detail Kencan</h2>
-            <div class="form-group">
-                <label for="dateName">Nama Kencan:</label>
-                <input type="text" id="dateName" placeholder="Contoh: Kencan 'Kopi Tawa' Pertama">
-            </div>
-            <div class="form-group">
-                <label for="dateMood">Pilih Mood Kencan:</label>
-                <select id="dateMood">
-                    <option value="Santai">🛋️ Santai & Chill</option>
-                    <option value="Petualangan">🏞️ Petualangan Ekstrem</option>
-                    <option value="Romantis">🌹 Romantis Klasik</option>
-                    <option value="Kreatif">🎨 Kreatif & DIY</option>
-                    <option value="MakanEnak">🍽️ Makan Enak Sampai Kenyang</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="budgetLevel">Level Budget:</label>
-                <select id="budgetLevel">
-                    <option value="1">💰 Hemat (Di bawah Rp 100k)</option>
-                    <option value="2">💸 Sedang (Rp 100k - 500k)</option>
-                    <option value="3">💎 Boros (Di atas Rp 500k)</option>
-                </select>
+        <section class="input-section card">
+            <h2>⚙️ Atur Kustomisasi Kencan</h2>
+            <div class="form-grid">
+                
+                <div class="form-group">
+                    <label for="dateMood"><i class="fas fa-heart"></i> Mood Utama:</label>
+                    <select id="dateMood">
+                        <option value="Santai">🛋️ Santai & Chill</option>
+                        <option value="Petualangan">🏞️ Petualangan Ekstrem</option>
+                        <option value="Romantis">🌹 Romantis Klasik</option>
+                        <option value="Kreatif">🎨 Kreatif & DIY</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="budgetLevel"><i class="fas fa-wallet"></i> Level Budget:</label>
+                    <select id="budgetLevel">
+                        <option value="1">💰 Hemat (Sangat Irir)</option>
+                        <option value="2">💸 Sedang (Cukup Aman)</option>
+                        <option value="3">💎 Mewah (Dompet Tebal)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="dateDuration"><i class="fas fa-clock"></i> Durasi Kencan:</label>
+                    <select id="dateDuration">
+                        <option value="Pendek">⏱️ Singkat (1-3 Jam)</option>
+                        <option value="Sedang">⏳ Sedang (4-6 Jam)</option>
+                        <option value="Panjang">🗓️ Sepanjang Hari (6+ Jam)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="dateTheme"><i class="fas fa-utensils"></i> Tema Khusus:</label>
+                    <select id="dateTheme">
+                        <option value="None">--- Tanpa Tema ---</option>
+                        <option value="KulinerInternasional">Kuliner Internasional 🍜</option>
+                        <option value="Outdoor">Alam & Outdoor 🌳</option>
+                        <option value="Indoor">Indoor & Cozy 🏠</option>
+                        <option value="Retro">Nostalgia & Retro 📼</option>
+                    </select>
+                </div>
             </div>
             
-            <button id="generatePlan">🔮 Ramal & Rencanakan! 🚀</button>
+            <button id="generatePlan"><i class="fas fa-magic"></i> Rencanakan & Ramalkan Kencanmu Sekarang! 🔮</button>
         </section>
         
-        <section class="result-section hidden">
-            <h2>💌 Hasil Ramalan Kencan Anda</h2>
+        <section class="result-section hidden card">
+            <h2>💌 Hasil Ramalan Kencan Mega Anda</h2>
             <div id="dateOutput">
                 </div>
         </section>
@@ -53,7 +73,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2025 Date Delight. Dibuat dengan cinta dan sedikit kekonyolan. 😉</p>
+        <p>&copy; 2025 Date Delight V2. Dibuat dengan cinta, fitur, dan kegilaan. 😉</p>
     </footer>
 
     <script src="script.js"></script>
